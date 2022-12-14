@@ -4,4 +4,4 @@ scikit-learn==1.1.1
 streamlit==1.11.0
 scipy==1.9.3
 regex==2022.10.31
-string==0.1.2
+string
