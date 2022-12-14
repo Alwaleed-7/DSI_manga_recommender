@@ -7,6 +7,7 @@ import html
 from string import punctuation
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
+from PIL import Image
 df = pd.read_csv('Mangas.csv', encoding="utf8")
 df2 = pd.read_csv('Author.csv')
 df = pd.merge(df, df2, on='title')
@@ -336,8 +337,9 @@ if st.button("Submit"):
     for i in result:
         recommendation = i[2]
         ind = i[4]
-        url = url = f'https://mangadex.org/covers/{ind}/{recommendation}'
-        st.image(url, caption = f'{i[1]} ({i[3]})', width=400, use_column_width='always', output_format="auto")
+        url = f'https://mangadex.org/covers/{ind}/{recommendation}'
+        img = Image.open(url)
+        st.image(img, caption = f'{i[1]} ({i[3]})', width=400, use_column_width='always', output_format="auto")
         
 
 
