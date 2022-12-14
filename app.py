@@ -3,7 +3,7 @@ import pandas as pd
 from scipy.stats import uniform
 from scipy.stats import randint
 import re
-import html
+# import html
 from string import punctuation
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
@@ -178,7 +178,7 @@ def clean_string(str_raw, removeStopWords=False):
 
     # convert all works to lower case
     # also remove multiple white space and replace with single
-    str_raw = html.unescape(str_raw)
+   # str_raw = html.unescape(str_raw)
     str_raw = str_raw.lower()
     str_raw = " ".join(str_raw.split())
 
