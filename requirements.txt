@@ -1,7 +1,9 @@
 joblib==1.1.0
 pandas==1.4.3
 scikit-learn==1.1.1
-streamlit==1.15.0
-scipy==1.9.3
-regex==2022.10.31
-htmlmin==0.1.12
+streamlit==1.11.0
+scipy
+re
+html
+string
+zip

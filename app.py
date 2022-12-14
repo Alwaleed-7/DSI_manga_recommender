@@ -16,7 +16,7 @@ df = df.reset_index(drop = True)
 
 author_score = 1.5
 artist_score = 1.4
-demographic_score = 0.9
+demographic_score = 1.0
 theme_score = 0.8
 genre_score = 0.8
 format_score = 0.6
@@ -285,7 +285,8 @@ st.header("Manga Recommender System")
 # Input bar 1
 options = df['title'].unique().tolist()
 manga = st.selectbox("Enter manga name ", options)
-
+status = st.selectbox("Only shows completed ", ('No', 'Yes'))
+colored = st.selectbox("Only shows colored ", ('No', 'Yes'))
 # Input bar 2
 # weight = st.number_input("Enter Weight")
 #weight = st.slider("Enter Weight", 35, 50, 35)
@@ -295,12 +296,11 @@ manga = st.selectbox("Enter manga name ", options)
 
 # If button is pressed
 if st.button("Submit"):
-    
     my_matrix = load_corpus_into_tfidf(df['description'])
-    ignore_tfidf_score_above_this_val = 0.30
+    ignore_tfidf_score_above_this_val = 0.75
     ignore_tfidf_score_below_this_val = 0.05
 
-    def similarity_score(manga):
+    def similarity_score(manga, status, colored):
         manga_ind = df.index[df['title'] == manga].tolist()[0]
         scores = []
         tf_idf = find_similar_tfidf(my_matrix, manga_ind)
@@ -324,17 +324,32 @@ if st.button("Submit"):
                     score += tf_idf[j] 
                 score += df['rating'][j] - df['rating'][manga_ind]
 
-                scores.append([score, df['title'][j], df['filename'][j], df['status'][j], df['id_y'][j]])
+                if status == 'Yes':
+                    if df['status'][j] == 'completed':
+                        scores.append([score, df['title'][j], df['status'][j], df['filename'][j], df['id_y'][j], df['rating'][j], j])
+                else:
+                    scores.append([score, df['title'][j], df['status'][j], df['filename'][j], df['id_y'][j], df['rating'][j], j])
+
+                if colored == 'Yes':
+                    if df['Full Color'][j] and df['Official Colored'][j] == 'False':
+                        if [score, df['title'][j], df['status'][j], df['filename'][j], df['id_y'][j], df['rating'][j], j] in scores:
+                            scores.remove([score, df['title'][j], df['status'][j], df['filename'][j], df['id_y'][j], df['rating'][j], j])
+
         scores.sort()
         scores.reverse()
+
         return scores[0:10]
-    result = similarity_score(manga)
+    result = similarity_score(manga, status=status, colored=colored)
     manga_ind = df.index[df['title'] == manga].tolist()[0]
     img_filename = df['filename'][manga_ind]
     # st.image(f'mangas_cover/{img_filename}', width=1, use_column_width='always', clamp=False, channels="RGB", output_format="JPEG")
     st.text(f'These are mangas similar to {manga}:', )
     for i in result:
-        recommendation = i[2]
+        recommendation = i[3]
+        
         ind = i[4]
-        url = url = f'https://mangadex.org/covers/{ind}/{recommendation}'
-        st.image(url, caption = f'{i[1]} ({i[3]})', width=400, use_column_width='always', output_format="auto")
+        url = f'https://mangadex.org/covers/{ind}/{recommendation}'
+        st.image(url, caption = f'{i[1]} ({i[2]}) Rating: {i[5]}', width=400, use_column_width='always', output_format="auto")
+        
+
+
