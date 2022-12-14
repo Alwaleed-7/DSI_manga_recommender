@@ -337,7 +337,7 @@ if st.button("Submit"):
         recommendation = i[2]
         ind = i[4]
         url = url = f'https://mangadex.org/covers/{ind}/{recommendation}'
-        st.image(url, caption = f'{i[1]} ({i[3]})', width=1, use_column_width='always', clamp=False, channels="RGB", output_format="JPEG")
+        st.image(url, caption = f'{i[1]} ({i[3]})', width=400, use_column_width='always', output_format="auto")
         
 
 
