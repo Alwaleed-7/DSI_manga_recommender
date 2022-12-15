@@ -1,2 +1,4 @@
 ![alt text](https://mltic.my/wp-content/uploads/2022/08/1635783444_This-is-MANGA-Plus-an-app-to-read-comics-for-790x527.jpg)
 # MISK Data Science Program
+* [Slide](./Presentation.pptx)
+* [Model](./model.ipynb)
