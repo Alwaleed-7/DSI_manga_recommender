@@ -285,8 +285,10 @@ st.header("Manga Recommender System")
 
 options = df['title'].unique().tolist()
 manga = st.selectbox("Enter manga name ", options)
-status = st.selectbox("Only shows completed ", ('No', 'Yes'))
-colored = st.selectbox("Only shows colored ", ('No', 'Yes'))
+status = st.checkbox("Only shows completed ")
+st.write('The state of the checkbox', status)
+colored = st.checkbox("Only shows colored ")
+st.write('The state of the checkbox', colored)
 
 
 # If button is pressed
@@ -319,13 +321,13 @@ if st.button("Submit"):
                     score += tf_idf[j] 
                 score += df['rating'][j] - df['rating'][manga_ind]
 
-                if status == 'Yes':
+                if status:
                     if df['status'][j] == 'completed':
                         scores.append([score, df['title'][j], df['status'][j], df['filename'][j], df['id_y'][j], df['rating'][j], j])
                 else:
                     scores.append([score, df['title'][j], df['status'][j], df['filename'][j], df['id_y'][j], df['rating'][j], j])
 
-                if colored == 'Yes':
+                if colored:
                     if df['Full Color'][j] and df['Official Colored'][j] == 'False':
                         if [score, df['title'][j], df['status'][j], df['filename'][j], df['id_y'][j], df['rating'][j], j] in scores:
                             scores.remove([score, df['title'][j], df['status'][j], df['filename'][j], df['id_y'][j], df['rating'][j], j])
