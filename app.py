@@ -4,6 +4,7 @@ from scipy.stats import uniform
 from scipy.stats import randint
 import re
 import html
+import os.path
 from string import punctuation
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
@@ -349,7 +350,11 @@ if st.button("Submit"):
         
         ind = i[4]
         url = f'mangas_cover/{recommendation}'
-        st.image(url, caption = f'{i[1]} ({i[2]}) Rating: {i[5]}', width=400, use_column_width='always', output_format="auto")
-        
+        if os.path.exists(url) == True:
+            result = url
+            st.image(result, caption = f'{i[1]} ({i[2]}) Rating: {i[5]}', width=400, use_column_width='always', output_format="auto")
+        else:
+            result = 'mangas_cover/no_img.jpg'
+            st.image(result, caption = f'{i[1]} ({i[2]}) Rating: {i[5]}', width=400, use_column_width='always', output_format="auto")
 
 
