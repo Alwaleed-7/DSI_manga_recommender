@@ -283,17 +283,11 @@ def find_similar_tfidf(tfidf_matrix, corpus_index):
 # Title
 st.header("Manga Recommender System")
 
-# Input bar 1
 options = df['title'].unique().tolist()
 manga = st.selectbox("Enter manga name ", options)
 status = st.selectbox("Only shows completed ", ('No', 'Yes'))
 colored = st.selectbox("Only shows colored ", ('No', 'Yes'))
-# Input bar 2
-# weight = st.number_input("Enter Weight")
-#weight = st.slider("Enter Weight", 35, 50, 35)
 
-# Dropdown input
-#eyes = st.selectbox("Select Eye Colour", ("Blue", "Brown"))
 
 # If button is pressed
 if st.button("Submit"):
