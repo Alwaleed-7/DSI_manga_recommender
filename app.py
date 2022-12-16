@@ -286,9 +286,8 @@ st.header("Manga Recommender System")
 options = df['title'].unique().tolist()
 manga = st.selectbox("Enter manga name ", options)
 status = st.checkbox("Only shows completed ")
-st.write(status)
 colored = st.checkbox("Only shows colored ")
-st.write(colored)
+
 
 
 # If button is pressed
