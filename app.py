@@ -325,7 +325,13 @@ def get_recommendations(manga_title, n_recommendations=10):
 
 # Move the search_manga function definition before it's used
 def search_manga(query):
-    return df[df['title'].str.contains(query, case=False)]['title'].tolist()
+    results = []
+    for manga in df.to_dict(orient='records'):
+        if query.lower() in manga['title'].lower():
+            # Add cover image path from Mangas_cover folder
+            manga['cover'] = f"Mangas_cover/{manga['id']}.jpg"
+            results.append(manga)
+    return results
 
 # Add show_manga_details function
 def show_manga_details(index):
